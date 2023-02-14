@@ -1,0 +1,29 @@
+{
+  "name": "mern-goal-setter",
+  "version": "1.0.0",
+  "description": "Application for setting user goals, implemented with a backend Node API and a React/Redux frontend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidIbarr/mern-goal-setter.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DavidIbarr/mern-goal-setter/issues"
+  },
+  "homepage": "https://github.com/DavidIbarr/mern-goal-setter#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
