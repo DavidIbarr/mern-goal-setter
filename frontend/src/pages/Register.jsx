@@ -9,6 +9,8 @@ import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
 function Register() {
+	const navigate = useNavigate()
+
 	// initialize state for the form
 	const [formData, setFormData] = useState({
 		name: '',
@@ -17,8 +19,6 @@ function Register() {
 		confirmPassword: '',
 	})
 	const { name, email, password, confirmPassword } = formData
-
-	const navigate = useNavigate()
 
 	// initialize redux auth state
 	const dispatch = useDispatch()
@@ -29,7 +29,7 @@ function Register() {
 		if (isError) {
 			toast.error(message)
 		}
-		// if successful authentication or user is logged in, navigate to dashboard
+		// if successful authentication or user has logged in, navigate to dashboard
 		else if (isSuccess || user) {
 			navigate('/')
 		}

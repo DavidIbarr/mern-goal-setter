@@ -1,23 +1,60 @@
-import { useState } from "react";
-import { FaSignInAlt } from "react-icons/fa";
+import { useState, useEffect } from "react"
+import { FaSignInAlt } from "react-icons/fa"
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import Spinner from '../components/Spinner'
+
+// redux
+import { useSelector, useDispatch } from 'react-redux'
+import { login, reset } from '../features/auth/authSlice'
 
 function Login() {
+  const navigate = useNavigate()
+
+  // initialize state for the form
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
   const { email, password } = formData;
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-  }
+	// initialize redux auth state
+	const dispatch = useDispatch()
+	const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
+  // detect changes to the auth state
+	useEffect(() => {
+		if (isError) {
+			toast.error(message)
+		}
+		// if successful authentication or user has logged in, navigate to dashboard
+		else if (isSuccess || user) {
+			navigate('/')
+		}
+		dispatch(reset())
+	}, [user, isError, isSuccess, message, navigate, dispatch])
+
+  // update form data
   const onFormChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
+  }
+
+  // handle form submission, log in existing users
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    const userData = {
+      email,
+      password
+    }
+    dispatch(login(userData))
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   return (
@@ -60,6 +97,6 @@ function Login() {
         </form>
       </section>
     </>
-  );
+  )
 }
-export default Login;
+export default Login
